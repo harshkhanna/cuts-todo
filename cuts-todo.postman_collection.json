@@ -1,0 +1,572 @@
+{
+	"info": {
+		"_postman_id": "10650d45-f31d-4f46-98da-8f9ce6eacf46",
+		"name": "cuts-todo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CUTS-TODO Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"token\", jsonData.access_token);\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"john\",\r\n  \"password\": \"password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CUTS-TODO getAll",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"token\", jsonData.access_token);\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE2ODExOTYxNTQsImV4cCI6MTY4MTE5OTc1NH0.OEEWVGznfxLoFsEFw8Fi8Ft2rQd5I4mjRjwCJVPuZyE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "h.khanna@dev01.incent4.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "ret1R#25eMMiGgqvlsx0NR9vKJNbepNdF",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "3MVG9Kip4IKAZQEVh2XSqnzoux9Kl1gArwA.jov5mI.9gx4MJjr06fSp73RPo0fZ_9iwZ3La7plZ3xt0ADIGt",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "9C8ED546EA30B46535448DF6B2453EC84C6CE43DED3E07CCC6CB245431D4FBBA",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/todo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CUTS-TODO getAll Posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"token\", jsonData.access_token);\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE2ODEyMDQxNDUsImV4cCI6MTY4MTIwNzc0NX0.YnAwhdarGOponBidLsT0yD3R4rD7b8d1WuvMEfeRjkQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CUTS-TODO getPost By ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"token\", jsonData.access_token);\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE2ODEyMDQxNDUsImV4cCI6MTY4MTIwNzc0NX0.YnAwhdarGOponBidLsT0yD3R4rD7b8d1WuvMEfeRjkQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/posts/:6435266e8afdf7dc13f2ad48",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"posts",
+						":6435266e8afdf7dc13f2ad48"
+					],
+					"variable": [
+						{
+							"key": "6435266e8afdf7dc13f2ad48",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CUTS-TODO add Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"token\", jsonData.access_token);\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE2ODEyMDQxNDUsImV4cCI6MTY4MTIwNzc0NX0.YnAwhdarGOponBidLsT0yD3R4rD7b8d1WuvMEfeRjkQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Buy milk\",\r\n  \"body\": \"Post about buying milk\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/posts/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"posts",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CUTS-TODO update Post add-comments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"token\", jsonData.access_token);\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE2ODEyMDQxNDUsImV4cCI6MTY4MTIwNzc0NX0.YnAwhdarGOponBidLsT0yD3R4rD7b8d1WuvMEfeRjkQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"text\": \"Buy milk comment 2\",\r\n  \"author\": \"John\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/posts/6435266e8afdf7dc13f2ad48/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"posts",
+						"6435266e8afdf7dc13f2ad48",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CUTS-TODO get-id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"token\", jsonData.access_token);\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE2ODExOTYxNTQsImV4cCI6MTY4MTE5OTc1NH0.OEEWVGznfxLoFsEFw8Fi8Ft2rQd5I4mjRjwCJVPuZyE"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/todo/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"todo",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CUTS-TODO update-id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"token\", jsonData.access_token);\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE2ODExOTYxNTQsImV4cCI6MTY4MTE5OTc1NH0.OEEWVGznfxLoFsEFw8Fi8Ft2rQd5I4mjRjwCJVPuZyE"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Buy milk updated\",\r\n    \"status\": \"In Progress\",\r\n    \"owner\": \"john\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/todo/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"todo",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CUTS-TODO delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"token\", jsonData.access_token);\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE2ODExMTM3NDMsImV4cCI6MTY4MTExNzM0M30.arwfK72vFjcZ9dS0pKDwSVQv_yI9capGoA1Q-X41wrw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "h.khanna@dev01.incent4.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "ret1R#25eMMiGgqvlsx0NR9vKJNbepNdF",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "3MVG9Kip4IKAZQEVh2XSqnzoux9Kl1gArwA.jov5mI.9gx4MJjr06fSp73RPo0fZ_9iwZ3La7plZ3xt0ADIGt",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "9C8ED546EA30B46535448DF6B2453EC84C6CE43DED3E07CCC6CB245431D4FBBA",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/todo/delete/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"todo",
+						"delete",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CUTS-TODO add",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"token\", jsonData.access_token);\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE2ODExOTYxNTQsImV4cCI6MTY4MTE5OTc1NH0.OEEWVGznfxLoFsEFw8Fi8Ft2rQd5I4mjRjwCJVPuZyE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Buy milk\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/todo/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"todo",
+						"add"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
