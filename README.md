@@ -14,9 +14,9 @@ Libraries required
 
 Modules
 1. app.js  - Main app
-2. todo.js - ToDo sub-Module, launched on URL prepended with /todo/
-3. login.js - Login module for validating the user/passwords and issuing JWT tokens
-4. 
+2. login.js - Login module for validating the user/passwords and issuing JWT tokens
+3. todo.js - ToDo sub-Module, launched on URL prepended with /todo/
+4. posts.js - Posts sub-module
 
 
 APIs organization
@@ -39,6 +39,8 @@ Launch
     4. npm install jsonwebtoken
     5. npm install fs
     6. npm install mocha chai jest jest-mock --save-dev
+    7. npm install mongoose
+    8. npm install mongodb@latest --save
 
     Run
     1. To run this code, you can start the server by running the app.js file with the command node app.js.

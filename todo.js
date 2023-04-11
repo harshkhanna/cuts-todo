@@ -1,90 +1,124 @@
 // Required modules
 const express = require('express');
 const { verifyToken } = require('./login');
+const mongoose = require('mongoose');
 const router = express.Router();
 
-// Set up the data
-let todoList = [];
+// Define the schema for the todoList document
+// Create the model for the todoList document
+const Todo = mongoose.models.Todo || mongoose.model('Todo', new mongoose.Schema({
+  id: Number,
+  title: String,
+  status: String,
+  owner: String,
+}));
 
-// Sample todo list data
-// let todoList = [
-//     {
-//       id: 1,
-//       title: 'Buy groceries',
-//       status: 'in progress',
-//       owner: 'john'
-//     },
-//     {
-//       id: 2,
-//       title: 'Walk the dog',
-//       status: 'not started',
-//       owner: 'jane'
-//     }
-//   ];
+  // Sample todo list data
+  // let todoList = [
+  //     {
+  //       id: 1,
+  //       title: 'Buy groceries',
+  //       status: 'in progress',
+  //       owner: 'john'
+  //     },
+  //     {
+  //       id: 2,
+  //       title: 'Walk the dog',
+  //       status: 'not started',
+  //       owner: 'jane'
+  //     }
+  //   ];
 
 // Route to show the todo list
-// Filter the response to only show the owner's todo
-router.get('/', (req, res) => {
-    const filteredList = todoList.filter(item => item.owner === req.user.username);
-    res.render('index', { todoList: filteredList });
+router.get('/', async (req, res) => {
+  try {
+    const todoList = await Todo.find();
+    res.render('index', { todoList });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 // Get a single todo item by ID
 // Request param will specify the item ID - /api/todo/1
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
     //console.log(req.params.id);
     //console.log(id);
     const id = parseInt(req.params.id);
 
-    const item = todoList.find(item => item.id === id && item.owner === req.user.username);
-    if (!item) {
-      return res.status(404).json({ message: `Todo item with ID ${id} not found` });
+    try {
+      const item = await Todo.findOne({ id });
+      if (!item) {
+        return res.status(404).json({ message: `Todo item with ID ${id} not found` });
+      }
+      res.json(item);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
     }
-    res.json(item);
 });
   
 // Route to add a new todo
 // Post the add the response redirects to / index page
 // Each element has the todo description and a status also
 // Default status is not started
-router.post('/add', (req, res) => {
+router.post('/add', async (req, res) => {
     const { title } = req.body;
     if (!title) {
       return res.status(400).json({ message: 'Title is required' });
     }
-    const id = todoList.length + 1;
-    const newItem = { id, title, status: 'not started', owner: req.user.username };
-    todoList.push(newItem);
-    res.json(newItem);
+    const id = await Todo.countDocuments({}) + 1;
+    const newItem = new Todo({ id, title, status: 'not started', owner: req.user.username });
+    try {
+      await newItem.save();
+      res.json(newItem);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }    
 });
 
 
 // Route to delete a todo
 // request param will specify the id - /api/todo/delete/1
-router.post('/delete/:id', (req, res) => {
-    //console.log(req.params);
-    const id = parseInt(req.params.id);
+router.post('/delete/:id', verifyToken, async (req, res) => {
+  //console.log(req.params);
+  const id = parseInt(req.params.id);
 
-    //Check owner of the tooken and task
-    const item = validateOwnerAndGetItem(req, id);
-    if (!item) {
-      return;
-    }
+  // Check owner of the token and task
+  const item = await Todo.findOne({ id, owner: req.user.username });
+  if (!item) {
+    return res.status(404).json({ message: `Todo item with ID ${id} not found` });
+  }
 
-    todoList.splice(index, 1);
+  //Check owner of the tooken and task
+  const tokenUsername = req.user.username;
+  if (item.owner !== tokenUsername) {
+    return res.status(403).json({ message: `User is not authorized to modify this todo item` });
+  }
+
+  try {
+    await Todo.deleteOne({ id, owner: req.user.username });
     res.json({ message: `Todo item with ID ${id} deleted` });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 
 // Route to update a todo status
 // request param will specify the id - PUT** - /api/1
-router.put('/:id', verifyToken, (req, res) => {
+router.put('/:id', verifyToken, async(req, res) => {
     const id = parseInt(req.params.id);
 
-    //Validate owner and allow update of item
-    const item = validateOwnerAndGetItem(req, id);
+    // Check owner of the token and task
+    const item = await Todo.findOne({ id, owner: req.user.username });
     if (!item) {
-      return;
+      return res.status(404).json({ message: `Todo item with ID ${id} not found` });
+    }
+
+    //Check owner of the tooken and task
+    const tokenUsername = req.user.username;
+    if (item.owner !== tokenUsername) {
+      return res.status(403).json({ message: `User is not authorized to modify this todo item` });
     }
 
     const { title, status } = req.body;
@@ -94,23 +128,14 @@ router.put('/:id', verifyToken, (req, res) => {
     if (status) {
       item.status = status;
     }
-    res.json(item);
+
+    try {
+      await item.save();
+      res.json(item);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }   
 });
 
-function validateOwnerAndGetItem(req, id) {
-    const tokenUsername = req.user.username;
-
-    const item = todoList.find(item => item.id === id && item.owner === req.user.username);
-    if (!item) {
-      return res.status(404).json({ message: `Todo item with ID ${id} not found` });
-    }
-
-    //Check owner of the tooken and task
-    if (item.owner !== tokenUsername) {
-      return res.status(403).json({ message: `User is not authorized to modify this todo item` });
-    }
-
-    return item;
-}
 
 module.exports = router;
